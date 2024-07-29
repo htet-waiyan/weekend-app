@@ -3,6 +3,8 @@ import {Col, Row} from 'antd'
 import { Select, Button, Alert, Card, Typography, Space } from 'antd';
 import axios from 'axios'
 
+axios.defaults.baseURL = process.env.REACT_APP_WEEKEND_API_BASE_URL
+
 const { Text } = Typography
 
 const citiesData = [{code: "SG", name: "Singapore"}, {"code": "BA", name: "Bali", disabled: true}]
@@ -61,12 +63,13 @@ function App() {
   const onSearch = () => {
     console.log(cityData, activityData)
     setLoading(true)
-    axios.get(`http://localhost:9000/mock?city=${cityData}&activity=${activityData}`)
+    axios.get(`/fun_things?city=${cityData}&activity=${activityData}`)
       .then((resp) => {
         setWeekendData(resp.data)
         setLoading(false)
       })
       .catch(() => {
+        setLoading(false)
         setError("Something went wrong")
       })
   }
